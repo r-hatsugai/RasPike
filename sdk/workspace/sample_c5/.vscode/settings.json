@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "edgeexchange.h": "c",
+        "rgbtohsv.h": "c"
+    }
+}

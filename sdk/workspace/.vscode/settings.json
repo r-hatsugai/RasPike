@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "scenestraight.h": "c",
+        "edgeexchange.h": "c",
+        "stdio.h": "c",
+        "distance.h": "c",
+        "scenecurve.h": "c",
+        "sceneblue.h": "c",
+        "scenecorner.h": "c",
+        "cmath": "cpp"
+    }
+}

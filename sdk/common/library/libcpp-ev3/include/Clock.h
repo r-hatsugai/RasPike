@@ -13,8 +13,7 @@ namespace ev3api {
 /**
  * EV3 クロッククラス
  */
-class Clock
-{
+class Clock{
 public:
     /**
      * コンストラクタ

@@ -5,7 +5,7 @@
 //
 
 #include "ColorSensor.h"
-using namespace ev3api;
+//using namespace ev3api;
 
 //=============================================================================
 // Constructor

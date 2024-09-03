@@ -1,6 +1,9 @@
-#ifdef __cplusplus
+/*#ifdef __cplusplus
 extern "C" {
-#endif
+#endif*/
+
+#ifndef APP_H
+#define APP_H
 
 #include "ev3api.h"
 
@@ -9,7 +12,7 @@ extern "C" {
 #define TRACER_PRIORITY  (TMIN_APP_TPRI + 2) /* ライントレースタスク */
 
 /* タスク周期の定義 */
-#define LINE_TRACER_PERIOD  (100 * 1000) /* ライントレースタスク:100msec周期 */
+#define LINE_TRACER_PERIOD  (4 * 1000) /* ライントレースタスク:4msec周期 */
 
 /* センサーポートの定義 */
 static const sensor_port_t
@@ -35,6 +38,6 @@ extern void tracer_task(intptr_t exinf);
 
 #endif /* TOPPERS_MACRO_ONLY */
 
-#ifdef __cplusplus
-}
+/*#ifdef __cplusplus
+}*/
 #endif

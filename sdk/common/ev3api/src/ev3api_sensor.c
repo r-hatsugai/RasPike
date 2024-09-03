@@ -233,9 +233,12 @@ void ev3_color_sensor_get_rgb_raw(sensor_port_t port, rgb_raw_t *val) {
 	set_sensor_mode(port,COL_RGBRAW);
 
 	uart_sensor_fetch_data(port, COL_RGBRAW, val, sizeof(rgb_raw_t));
+	//syslog(LOG_WARNING, "color_sensor_get!!!!!!!!!!!!!R %d", val->r);
+	//syslog(LOG_WARNING, "color_sensor_get!!!!!!!!!!!!!G %d", val->g);
+	//syslog(LOG_WARNING, "color_sensor_get!!!!!!!!!!!!!B %d", val->b);
 
     return;
-
+	
 error_exit:
     syslog(LOG_WARNING, "%s(): ercd %d", __FUNCTION__, ercd);
 }
