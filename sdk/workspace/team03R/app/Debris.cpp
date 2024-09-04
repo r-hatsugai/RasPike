@@ -78,6 +78,7 @@ bool Debris::debris_removal(float d_distance,float leftdistance, float rightdist
 
 bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdistance)
 {
+    flag = true; 
     //---------------------------------------------
     //フラグ返す
     //---------------------------------------------
@@ -132,7 +133,7 @@ bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdi
         
         constant.constant_run(0 , 0);
           
-        flag = true;      
+        flag = false;      
         
     }
     
@@ -188,9 +189,9 @@ bool Debris::debris_short(float d_distance, float leftdistance, float rightdista
     return run_flag;
 }
 
-void Debris::debris_action(float d_distance, float leftdistance, float rightdistance)
+bool Debris::debris_action(float d_distance, float leftdistance, float rightdistance)
 {
-    //d_flag2 = debris_removal2(d_distance, leftdistance, rightdistance);
+    d_flag = true;
     
     if(b_flag)
     {
@@ -207,14 +208,19 @@ void Debris::debris_action(float d_distance, float leftdistance, float rightdist
     }
     else
     {
-        distance2 = distance.Distance_calculate();
-        leftdistance2 = distance.Get_distance_left();
-        rightdistance2 = distance.Get_distance_right();
-        printf("\ndebris_action:distance2:%f\n",distance2);
+        if(d_flag2)
+        {
+            distance2 = distance.Distance_calculate();
+            leftdistance2 = distance.Get_distance_left();
+            rightdistance2 = distance.Get_distance_right();
+            printf("\ndebris_action:distance2:%f\n",distance2);
 
-        //d_flag2 = debris_short(distance2, leftdistance2, rightdistance2);
-        d_flag2 = debris_removal2(distance2, leftdistance2, rightdistance2);
-
-        //printf("d_flag2:%d\n", d_flag2);
+            d_flag2 = debris_removal2(distance2, leftdistance2, rightdistance2);
+        }
+        else
+        {
+            d_flag = false;
+        }
     }
+    return d_flag;
 }

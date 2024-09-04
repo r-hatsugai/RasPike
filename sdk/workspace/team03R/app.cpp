@@ -51,7 +51,7 @@ void tracer_task(intptr_t exinf) {
   //debris.debris_removal(leftdistance,rightdistance);
   scene.scene_decide(getdistance); 
 
-  if(0 < getdistance){//12430
+  if(20000 < getdistance){//12430
     stp_cyc(TRACER_CYC);
     constant.constant_run(true,true);
     distance.Distance_reset();

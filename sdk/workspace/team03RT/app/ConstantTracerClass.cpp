@@ -5,8 +5,36 @@ ConstantTracerClass::ConstantTracerClass():
     }
 void ConstantTracerClass :: constant_run(int left_motor_power,int right_motor_power)
 {
-    leftWheel.setPWM(left_motor_power);
-    rightWheel.setPWM(right_motor_power);
+    l_dig = leftWheel.getCount();
+    r_dig = rightWheel.getCount();
+    
+    printf("leftdig%d\n", l_dig);
+    printf("rightdig%d\n", r_dig);
+
+    if(l_dig < 0)
+    {
+        l_dig = l_dig * -1;
+    }
+    else if(r_dig < 0)
+    {
+        r_dig = r_dig * -1;
+    }
+
+    dig = r_dig - l_dig;
+
+    turn_p = dig * 0.1176;//0.11~0.12の間
+
+    if(l_dig < r_dig)
+    {
+        leftWheel.setPWM(left_motor_power + turn_p);
+        rightWheel.setPWM(right_motor_power);
+    }
+    else if(l_dig > r_dig)
+    {
+        turn_P = turn_P * 0.8; 
+        leftWheel.setPWM(left_motor_power - turn_P);
+        rightWheel.setPWM(right_motor_power);
+    }
 
 }
 

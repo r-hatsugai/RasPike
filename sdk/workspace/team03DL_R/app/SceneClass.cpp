@@ -105,7 +105,7 @@ bool SceneClass::scene_decide(float distance){
         }
     }
     /* シーン➃ */ //8180 10690 2480
-    else if(8250 < distance && distance <= 10740)
+    else if(8250 < distance && distance <= 10800)
     {
         tracer.run(0.39,0,0.018,37,1);
         //tracer.run(0.37,0,0.022,37,1);
@@ -113,17 +113,17 @@ bool SceneClass::scene_decide(float distance){
         //tracer.run(0.27,0,0.022,0,edge);
     }
     /* シーン➄ */ //10690 10800 151
-    else if(10740 < distance && distance <= 10741)
+    else if(10800 < distance && distance <= 10871)
     {
         if(firstEdge == -1){
             constanttracer.constant_run(28, 42);//(28, 42)
         }else if(firstEdge == 1){
             //constanttracer.constant_run(56, 28);//(56, 28)
-            constanttracer.constant_run(0, 0);//(56, 28) 30 35
+            constanttracer.constant_run(30, 39);//(40, 28) 30 35
         }
     }
     /* シーン➅ */ //10800 11580 730
-    else if(10741 < distance && distance <= 11551)
+    else if(10871 < distance && distance <= 11551)
     {
         tracer.run(0.19,0,0.015,36,-1);
     }
@@ -147,12 +147,12 @@ bool SceneClass::scene_decide(float distance){
     {
         edge=edgeexchange.edge_exchange();
         if(edge == -1){
-            tracer.run(0.095,0,0.009,0,1);
+            flag = true;
+            //tracer.run(0.095,0,0.009,0,1);
         }else{
             //leftWheel.reset();
             //rightWheel.reset();
             //gyrosensor.reset();
-            //flag = true;
         }
     }        
 

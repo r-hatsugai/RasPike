@@ -18,42 +18,54 @@ bool Debris::debris_removal(float d_distance,float leftdistance, float rightdist
     //---------------------------------------------
     //フラグ返す
     //---------------------------------------------
-    //printf("\nRem:distance%f\n",d_distance);
+    printf("\nRem:distance%f\n",d_distance);
     //printf("Rem:Direction:%f\n",Direction);
 
     //---------------------------------------------
     //直進
     //---------------------------------------------
-    if(d_distance < 228.0)//〇の固定値
+    //constant.gyro_run(0 , 0);
+
+    if(d_distance < 100.0)//〇の固定値
+    {
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
+    }
+    if(100.0 <= d_distance && d_distance < 322.0)//Pid
     {
         tracer.run(0.2, 0, 0.016, 50, 1);
-    }
-    else if(228.0 <= d_distance && d_distance < 374.0)//pid
-    {
         gyrosensor.reset();
-        constant.gyro_run(50 , 50);
+    }
+    else if(322.0 <= d_distance && d_distance < 436.0)//pid
+    {
+        //constant.gyro_run(0 , 0);
+        constant.constant_run(0, 0);
     }
     //----------------------------------------------
-    else if(374.0 <= d_distance && d_distance < 573.0)//〇の固定値
+    else if(436.0 <= d_distance && d_distance < 668.0)//〇の固定値
     {
         tracer.run(0.2, 0, 0.016, 50, 1);
+        gyrosensor.reset();
     }
-    else if(573.0 <= d_distance && d_distance < 717.0)//pid
+    else if(668.0 <= d_distance && d_distance < 780.0)//pid
     {
         //gyrosensor.reset();
-        constant.gyro_run(50 , 50);
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
     //----------------------------------------------
-    else if(717.0 <= d_distance && d_distance < 923.0)//〇の固定値
+    else if(780.0 <= d_distance && d_distance < 1010.0)//〇の固定値
     {
         tracer.run(0.2, 0, 0.016, 50, 1);
+        gyrosensor.reset();
     }
-    else if(923.0 <= d_distance && d_distance < 990.0)//pid
+    else if(1010.0 <= d_distance && d_distance < 1120.0)//pid
     {
         //gyrosensor.reset();
-        constant.gyro_run(50 , 50);
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
-    else if(d_distance >= 990.0)
+    else if(d_distance >= 1120.0)
     {
         constant.gyro_run(0 , 0);
         //-------------------------------------------------------
@@ -94,9 +106,9 @@ bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdi
     //---------------------------------------------
     if(d_distance < 20.0)//〇の固定値
     {
-        //tracer.run(0.25, 0, 0.016, 40, 1);
-        gyrosensor.reset();
-        constant.gyro_run(50 , 50);
+        //gyrosensor.reset();
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
     else if(20.0 <= d_distance && d_distance < 230.0)//pid
     {
@@ -105,9 +117,9 @@ bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdi
     //----------------------------------------------
     else if(230.0 <= d_distance && d_distance < 375.0)//〇の固定値
     {
-        gyrosensor.reset();
-        constant.gyro_run(50 , 50);
-        
+        //gyrosensor.reset();
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
     else if(375.0 <= d_distance && d_distance < 595.0)//pid 距離の見直し
     {
@@ -116,8 +128,9 @@ bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdi
     //----------------------------------------------
     else if(595.0 <= d_distance && d_distance < 735.0)//〇の固定値
     {
-        gyrosensor.reset();
-        constant.gyro_run(50 , 50);
+        //gyrosensor.reset();
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
     else if(735.0 <= d_distance && d_distance < 950.0)//pid
     {
@@ -126,8 +139,9 @@ bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdi
     //----------------------------------------------
     else if(950.0 <= d_distance && d_distance < 1050.0)//〇の固定値
     {
-        gyrosensor.reset();
-        constant.gyro_run(50 , 50);
+        //gyrosensor.reset();
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
     else if(d_distance >= 1050.0)
     {
@@ -151,21 +165,24 @@ bool Debris::debris_short(float d_distance, float leftdistance, float rightdista
     //printf("\ndebris_short:distance%f\n",d_distance);
     //printf("s_Direction:%f\n",s_Direction);
 
-    if(d_distance < 50.0)
+    if(d_distance < 20.0)
     {
-        constant.constant_run(50 , 50);
-        //tracer.run(0.2, 0, 0.016, 50, 1);
+        //gyrosensor.reset();
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
-    else if(50.0 <= d_distance && d_distance < 335.0)
+    else if(20.0 <= d_distance && d_distance < 230.0)
     {
-        tracer.run(0.2, 0, 0.016, 0, 1);
+        tracer.run(0.2, 0, 0.016, 50, 1);
     }
     //----------------------------------------------
-    else if(335.0 <= d_distance && d_distance < 425.0)
+    else if(230.0 <= d_distance && d_distance < 375.0)
     {
-        //constant.constant_run(50 , 50);
+        //gyrosensor.reset();
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(50, 50);
     }
-    else if(425.0 <= d_distance)
+    else if(375.0 <= d_distance)
     {
         constant.constant_run(0 , 0);
         //-------------------------------------------------------
@@ -176,12 +193,12 @@ bool Debris::debris_short(float d_distance, float leftdistance, float rightdista
         //-------------------------------------------------------
         //旋回
         //-------------------------------------------------------
-        constant.constant_run(-60 , 60);
+        constant.pid_l_turn(-60 , 60);
 
         //-------------------------------------------------------
         //方位が一定を超えたら停止
         //-------------------------------------------------------
-        if(s_Direction > 88.0)
+        if(s_Direction > 90.0)
         {
             constant.gyro_run(0 , 0);   
             direction.Direction_init();
@@ -215,7 +232,9 @@ void Debris::debris_action(float d_distance, float leftdistance, float rightdist
         rightdistance2 = distance.Get_distance_right();
         printf("\ndebris_action:distance2:%f\n",distance2);
 
-        d_flag2 = debris_removal2(distance2, leftdistance2, rightdistance2);
+        //d_flag2 = debris_removal2(distance2, leftdistance2, rightdistance2);
+
+        d_flag2 = debris_short(distance2, leftdistance2, rightdistance2);
 
     }
 }
