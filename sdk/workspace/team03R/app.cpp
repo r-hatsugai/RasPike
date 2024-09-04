@@ -24,7 +24,8 @@ Smartcarry smartcarry;
 Clock clock;    
 
 
-
+//bool flag = true;
+bool flag = false;
 bool d_flag = true;
 bool d_1_flag = true;
 bool s_flag = true;
@@ -40,6 +41,7 @@ void tracer_task(intptr_t exinf) {
   //変数
   //---------------------------------
   float getdistance;
+
   //---------------------------------
   //距離取得
   //---------------------------------
@@ -48,10 +50,12 @@ void tracer_task(intptr_t exinf) {
   //---------------------------------
   //シーン判断クラスを呼ぶ
   //---------------------------------
-  //debris.debris_removal(leftdistance,rightdistance);
-  scene.scene_decide(getdistance); 
-
-  if(20000 < getdistance){//12430
+  if(flag)
+  {
+    flag = scene.scene_decide(getdistance); 
+  }
+  else
+  {
     stp_cyc(TRACER_CYC);
     constant.constant_run(true,true);
     distance.Distance_reset();
@@ -82,19 +86,7 @@ void debris_task(intptr_t exinf) {
   //---------------------------------
   //デブリ
   //---------------------------------
-  if(d_flag)
-  {
-    d_flag = debris.debris_action(distance, leftdistance, rightdistance);
-  }
-  else
-  {
-    stp_cyc(DEBRIS_CYC);
-    constant.constant_run(true,true);
-    d_distance.Distance_reset();
-    smartcarry.init();
-    printf("スマートキャリーサイクル起動\n");
-    sta_cyc(SMARTCARRY_CYC);
-  } 
+  debris.debris_removal(leftdistance , rightdistance);
   ext_tsk();
 }
 

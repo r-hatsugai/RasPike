@@ -27,7 +27,8 @@ bool SceneClass::scene_decide(float distance){
     {
         //tracer.run(0.095,0,0.009,50,firstEdge);
         //tracer.run(0.095,0,0.009,50,firstEdge);
-        tracer.run(0.095,0,0.009,60,firstEdge);
+        //tracer.run(0.095,0,0.009,60,firstEdge);
+        tracer.run(0.075,0.015,0.02,65,firstEdge);
         //tracer.run(0.07,0,0.016,70,firstEdge);
         //tracer.run(0.064,0,0.012,73,firstEdge);
         //tracer.run(0.09,0,0.035,80,firstEdge);
@@ -41,7 +42,8 @@ bool SceneClass::scene_decide(float distance){
     /* 第一コーナー → 第二コーナー */ //3500 4750 4800
     else if(3280 < distance && distance <= 4800)
     {
-        tracer.run(0.095,0,0.009,60,firstEdge);
+        //tracer.run(0.095,0,0.009,60,firstEdge);
+        tracer.run(0.075,0.015,0.02,65,firstEdge);
     }
     /* 第二コーナー */
     else if(4800 < distance && distance <= 5590)
@@ -83,14 +85,14 @@ bool SceneClass::scene_decide(float distance){
         }
     }
     /* シーン➃ 前半 */ //8180 10690 2480
-    else if(8180 < distance && distance <= 8680)
+    else if(8180 < distance && distance <= 8500)
     {
             tracer.run(0.37,0,0.022,37,-1);
             //tracer.run(0.3,0.26,0.0015,37,edge);        
             //tracer.run(0.27,0,0.022,0,edge);
     }
         /* シーン➃ 後半 */ //8180 10690 2480
-    else if(8680 < distance && distance <= 10670)
+    else if(8500 < distance && distance <= 10670)
     {
             tracer.run(0.37,0,0.022,45,-1);
             //tracer.run(0.3,0.26,0.0015,37,edge);        

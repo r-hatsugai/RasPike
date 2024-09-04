@@ -20,8 +20,7 @@ void Tracer::terminate() {
 //---------------------------------
 //走行関数
 //---------------------------------
-void Tracer::run(float KP, float KI ,float KD, int BASE_SPEED ,int edge) 
-{
+void Tracer::run(float KP, float KI ,float KD, int BASE_SPEED ,int edge) {
   //------------------------------
   //pid計算
   //------------------------------

@@ -33,9 +33,9 @@ class Debris
 
     float Direction;
     float s_Direction;
-    bool flag = true;
+    bool flag;
     bool turn_flag;
-    bool run_flag = true;
+    bool run_flag;
 
     bool reset = true;
     bool a_flag = true;
@@ -44,7 +44,6 @@ class Debris
     bool d_flag = true;
     bool e_flag = true;
     bool f_flag = true;
-    bool flag2;
     float distance2;
     float leftdistance2;
     float rightdistance2;

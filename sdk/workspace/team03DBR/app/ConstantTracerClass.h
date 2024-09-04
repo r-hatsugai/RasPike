@@ -30,6 +30,6 @@ class ConstantTracerClass : public Tracer
     int R_dig;
     int dig;
     int Dig;
-    #define KP 3
+    #define KP 1.69
 };
 #endif

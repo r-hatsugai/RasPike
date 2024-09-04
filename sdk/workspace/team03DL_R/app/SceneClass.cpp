@@ -32,6 +32,7 @@ bool SceneClass::scene_decide(float distance){
     {        
         //tracer.run(0.095,0,0.009,50,firstEdge);
         //tracer.run(0.095,0,0.009,60,firstEdge);
+        //tracer.run(0.075,0.015,0.02,65,firstEdge);
         tracer.run(0.07,0,0.016,70,firstEdge);
         //tracer.run(0.064,0,0.012,73,firstEdge);
         //tracer.run(0.074,0,0.033,75,firstEdge);
@@ -73,11 +74,7 @@ bool SceneClass::scene_decide(float distance){
     /* シーン➀ */ //6130 6360 280
     else if(6130 < distance && distance <= 6320)
     {
-        if(firstEdge == -1){
-            constanttracer.constant_run(58, 40);//(42, 30)
-        }else if(firstEdge == 1){
-            constanttracer.constant_run(32, 36);//(28, 32)
-        }
+        constanttracer.constant_run(32, 36);
     }
     /* シーン➁ 前半 */ //6360 8070 1620
     else if(6320 < distance && distance <= 7470)
@@ -94,33 +91,30 @@ bool SceneClass::scene_decide(float distance){
     /* シーン➂ */ //8070 8180 170
     else if(8070 < distance && distance <= 8250)
     {
-        if(firstEdge == -1){
-            constanttracer.constant_run(42, 32);//45,32
-        }else if(firstEdge == 1){
-            /* 充電満タン時 */
-            constanttracer.constant_run(29, 33);
-            /* 充電微量時 */
-            //constanttracer.constant_run(35, 30);
-
-        }
+        /* 充電満タン時 */
+        constanttracer.constant_run(29, 33);
+        /* 充電微量時 */
+        //constanttracer.constant_run(35, 30);
     }
-    /* シーン➃ */ //8180 10690 2480
-    else if(8250 < distance && distance <= 10800)
+    /* シーン➃ 前半 */ //8180 10690 2480
+    else if(8250 < distance && distance <= 8800)
     {
         tracer.run(0.39,0,0.018,37,1);
         //tracer.run(0.37,0,0.022,37,1);
         //tracer.run(0.3,0.26,0.0015,37,edge);        
         //tracer.run(0.27,0,0.022,0,edge);
     }
-    /* シーン➄ */ //10690 10800 151
-    else if(10800 < distance && distance <= 10871)
+    /* シーン➃ 後半 */ //8180 10690 2480
+    else if(8800 < distance && distance <= 10780)
     {
-        if(firstEdge == -1){
-            constanttracer.constant_run(28, 42);//(28, 42)
-        }else if(firstEdge == 1){
-            //constanttracer.constant_run(56, 28);//(56, 28)
-            constanttracer.constant_run(30, 39);//(40, 28) 30 35
-        }
+        tracer.run(0.37,0,0.022,45,1);
+    }
+
+    /* シーン➄ */ //10690 10800 151
+    else if(10780 < distance && distance <= 10871)
+    {
+        //constanttracer.constant_run(56, 28);//(56, 28)
+        constanttracer.constant_run(30, 39);//(40, 28) 30 35
     }
     /* シーン➅ */ //10800 11580 730
     else if(10871 < distance && distance <= 11551)
@@ -130,11 +124,7 @@ bool SceneClass::scene_decide(float distance){
     /* シーン➆ */ //11580 11730 174
     else if(11551 < distance && distance <= 11705)
     {
-        if(firstEdge == -1){
-            constanttracer.constant_run(49, 28);//45,30
-        }else if(firstEdge == 1){
-            constanttracer.constant_run(30, 35);
-        }
+        constanttracer.constant_run(30, 35);
     }
     /* ダブルループ出口 → デブリリムーバル入り口 */ //11730 12130 570
     else if(11705 < distance && distance <= 12657)

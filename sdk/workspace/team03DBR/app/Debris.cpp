@@ -104,7 +104,6 @@ bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdi
     //フラグ返す
     //--------------------------------------------
     printf("直進\n");
-    
     //---------------------------------------------
     //直進
     //---------------------------------------------
@@ -155,10 +154,10 @@ bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdi
     {    
        constant.constant_run(0 , 0);
           
-        flag2 = false;      
+        flag = false;      
     }
     
-    return flag2;
+    return flag;
 }
 
 //----------------------------------------
@@ -198,7 +197,7 @@ bool Debris::debris_short(float d_distance, float leftdistance, float rightdista
         //-------------------------------------------------------
         //旋回
         //-------------------------------------------------------
-        constant.pid_r_turn(-70 , 70);
+        constant.pid_r_turn(-65 , 65);
         //printf("\n方位:%f\n",s_Direction);
 
         //-------------------------------------------------------
@@ -209,7 +208,7 @@ bool Debris::debris_short(float d_distance, float leftdistance, float rightdista
             //tracer.run(0.2, 0, 0.016, 0, -1);
             constant.gyro_run(0 , 0);   
             //direction.Direction_init();
-            run_flag = false;
+            run_flag = false;      
         }
     }
     return run_flag;
@@ -218,60 +217,28 @@ bool Debris::debris_short(float d_distance, float leftdistance, float rightdista
 void Debris::debris_action(float d_distance, float leftdistance, float rightdistance)
 {
     //d_flag2 = debris_removal2(d_distance, leftdistance, rightdistance);
-    if(f_flag)
+    if(b_flag)
     {
-        if(d_flag)
+        if(a_flag)
         {
-            if(b_flag)
-            {
-                if(a_flag)
-                {
-                    //一回目
-                    printf("\n一回目\n");
-                    a_flag = debris_removal(d_distance, leftdistance, rightdistance);
-                }
-                else
-                {
-                    b_flag = false;
-                    distance.Distance_reset();
-                    gyrosensor.reset();
-                    direction.Direction_init();
-                }
-            }
-            else
-            {
-                if(c_flag){
-                    distance2 = distance.Distance_calculate();
-                    leftdistance2 = distance.Get_distance_left();
-                    rightdistance2 = distance.Get_distance_right();
-
-                    //二回目
-                     printf("\n二回目\n");
-                    c_flag = debris_short(distance2, leftdistance2, rightdistance2);
-
-                }else{
-                    d_flag = false;
-                    distance.Distance_reset();
-                    gyrosensor.reset();
-                    direction.Direction_init();
-                }
-            }
-        }else{
-            if(e_flag){
-                distance2 = distance.Distance_calculate();
-                leftdistance2 = distance.Get_distance_left();
-                rightdistance2 = distance.Get_distance_right();
-
-                printf("\n三回目\n");
-                e_flag = debris_removal2(distance2, leftdistance2, rightdistance2);
-            }else{
-                f_flag = false;
-                distance.Distance_reset();
-                gyrosensor.reset();
-                direction.Direction_init();
-            }
+            //一回目
+            a_flag = debris_removal(d_distance, leftdistance, rightdistance);
         }
-    }else{
-        
+        else
+        {
+            b_flag = false;
+            distance.Distance_reset();
+            gyrosensor.reset();
+        }
     }
+    else
+    {
+        distance2 = distance.Distance_calculate();
+        leftdistance2 = distance.Get_distance_left();
+        rightdistance2 = distance.Get_distance_right();
+
+        //二回目
+        c_flag = debris_removal2(distance2, leftdistance2, rightdistance2);
+    }
+    
 }
