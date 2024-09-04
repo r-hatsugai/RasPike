@@ -65,20 +65,21 @@ void debris_task(intptr_t exinf) {
   //---------------------------------
   //変数
   //---------------------------------
+  float distance_de;
   float leftdistance;
   float rightdistance;
   bool d_flag;
   //---------------------------------
   //距離取得
   //---------------------------------
-  d_distance.Distance_calculate();
-  leftdistance=d_distance.Get_distance_left();
-  rightdistance=d_distance.Get_distance_right();
+  distance_de = d_distance.Distance_calculate();
+  leftdistance = d_distance.Get_distance_left();
+  rightdistance = d_distance.Get_distance_right();
 
   //---------------------------------
   //デブリ
   //---------------------------------
-  d_flag = debris.debris_removal(leftdistance,rightdistance);
+  debris.debris_action(distance_de, leftdistance, rightdistance);
   
   if(d_flag == true){//12430
 
@@ -86,7 +87,7 @@ void debris_task(intptr_t exinf) {
     constant.constant_run(true,true);
     distance.Distance_reset();
 
-    // デブリの周期ハンドラを起動
+    // スマキャリの周期ハンドラを起動
     sta_cyc(SMARTCARRY_CYC);
     printf("smartcarryの周期ハンドラ起動\n");  
   } 

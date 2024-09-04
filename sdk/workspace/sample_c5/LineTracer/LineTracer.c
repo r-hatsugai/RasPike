@@ -42,6 +42,29 @@ first_Distance();
 //ライントレースタスク(4msec周期で関数コールされる)
 //-------------------------------------------------------------------------------------
 void tracer_task(intptr_t unused) {
+
+    int16_t steering_amount; /* ステアリング操舵量の計算 */
+    
+    /* ステアリング操舵量の計算 */
+    steering_amount = steering_amount_calculation();
+
+    /* 走行モータ制御 */
+    motor_drive_control(steering_amount);
+
+    /* タスク終了 */
+    ext_tsk();
+}
+
+/* ステアリング操舵量の計算 */
+static int16_t steering_amount_calculation(void){
+
+    uint16_t  target_brightness; /* 目標輝度値 */
+    float32_t diff_brightness;   /* 目標輝度との差分値 */
+    int16_t   steering_amount;   /* ステアリング操舵量 */
+    rgb_raw_t rgb_val;           /* カラーセンサ取得値 */
+
+    /* 目標輝度値の計算 */
+    target_brightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
     //-------------------------------------------------------------------------------------
     //変数宣言
     //-------------------------------------------------------------------------------------
