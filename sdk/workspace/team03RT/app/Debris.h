@@ -44,7 +44,7 @@ class Debris
     bool d_flag = true;
     bool e_flag = true;
     bool f_flag = true;
-    bool flag2;
+    bool flag2 = true;
     float distance2;
     float leftdistance2;
     float rightdistance2;
