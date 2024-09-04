@@ -10,6 +10,7 @@ void ConstantTracerClass :: constant_run(int left_motor_power,int right_motor_po
     
     printf("leftdig%d\n", l_dig);
     printf("rightdig%d\n", r_dig);
+    printf("rightdig%d\n", r_dig);
 
     if(l_dig < 0)
     {
