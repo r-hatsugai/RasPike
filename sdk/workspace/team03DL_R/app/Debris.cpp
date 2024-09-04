@@ -1,132 +1,235 @@
 #include "Debris.h"
 #include <unistd.h>
 
-
-#define GRID_NUM 5
-
-typedef enum{
-    TURN,//目標座標の方向へ向くまで旋回
-    MOVE,//目標座標に到達するまで前進
-    END  //構造体に格納される座標
-}RUN_STATE;
-
-struct GRID_XY{
-    int gridX;
-    int gridY;
-};
-
 Debris::Debris():
     leftWheel(PORT_C), rightWheel(PORT_B), gyrosensor(PORT_4)
-    {
-        cur_gridX = 0;//現在位置座標のX値
-        cur_gridY = 0;//現在位置座標のY値
-        target_dir = 0.0;//現在位置座標から目標座標までの距離
-        target_dis = 0.0;//現在位置座標から目標座標までの方位
-        cur_dir = 0.0;//方位計の現在値
-        cur_dis = 0.0;//距離計の現在値
-        grid_count= 0;//目標座標構造体への参照カウンタ
-        distance.Distance_reset();
-        direction.Direction_init();
-
-    }
+    {}
 
 void Debris::init() {
   init_f("Debris");
 }
 
-bool Debris::debris_removal(float leftdistance, float rightdistance)
+//----------------------------------------
+//４マス分直進する関数
+//----------------------------------------
+bool Debris::debris_removal(float d_distance,float leftdistance, float rightdistance)
 {
-    //-------------------------------------------
-    //目標座標の設定
-    //-------------------------------------------
-    static RUN_STATE state = TURN;
-    struct GRID_XY target_grid[GRID_NUM] = {{2,2},
-                                            {3,1},
-                                            {4,2},
-                                            {5,0},
-                                            {5,3},
-                                            };//(y軸,x軸)
-/*
+    flag = true;
+    //---------------------------------------------
+    //フラグ返す
+    //---------------------------------------------
+    printf("\nRem:distance%f\n",d_distance);
+    //printf("Rem:Direction:%f\n",Direction);
 
+    //---------------------------------------------
+    //直進
+    //---------------------------------------------
+    //constant.gyro_run(0 , 0);
 
-3,0  3,1  3,2  3,3  3,4(スマートキャリーボトル)  3,6(ゴール)
-2,0
-1,0
-0,0                       0,5(置く場所)
-dd*/
-    //-------------------------------------------
-    //目標座標までの距離、方位を格納
-    //-------------------------------------------
-    coordinate.Grid_setdistance(cur_gridX, cur_gridY, target_grid[grid_count].gridX,target_grid[grid_count].gridY);
-    coordinate.Grid_setdirection(cur_gridX, cur_gridY, target_grid[grid_count].gridX,target_grid[grid_count].gridY);
-    target_dis = coordinate.Grid_getdistance();
-    target_dir = coordinate.Grid_getdirection();
-
-    direction.Direction_update(leftdistance,rightdistance);
-    cur_dis = distance.Distance_calculate();
-
-    cur_dir = direction.Get_direction();  
-
-    flag = false;
-    
-
-    switch(state){
-        case TURN:
-            if(cur_dir < target_dir)
-            {
-                constant.pid_l_turn(60 , -60);
-            }
-            else if(cur_dir > target_dir)
-            {
-                constant.pid_r_turn(-60 , 60);//46
-            }
-
-            if((cur_dir > (target_dir-1.0)) && (cur_dir < (target_dir+1.0)))
-            {;
-                gyrosensor.reset();
-                sleep(500*1000);//4*1000
-                state = MOVE;
-            }
-            break;
-
-        case MOVE:
-            constant.gyro_run(70,70);
-
-            if((cur_dis > target_dis) && (grid_count < (GRID_NUM-1)))
-            {
-                cur_gridX = target_grid[grid_count].gridX;
-                cur_gridY = target_grid[grid_count].gridY;
-
-                distance.Distance_reset();
-                direction.Direction_setdirection(target_dir);
-
-                grid_count++;
-                coordinate.Grid_setdistance(cur_gridX, cur_gridY, target_grid[grid_count].gridX, target_grid[grid_count].gridY);
-                coordinate.Grid_setdirection(cur_gridX, cur_gridY, target_grid[grid_count].gridX, target_grid[grid_count].gridY);
-                target_dis = coordinate.Grid_getdistance();
-                target_dir = coordinate.Grid_getdirection();
-
-                state = TURN;
-                gyrosensor.reset();
-                break;
-            }
-            else if((cur_dis > target_dis) && (grid_count >= (GRID_NUM-1)))
-            {
-                state = END;
-            }
-            break;
-
-        case END:
-
-            constant.constant_run(true , true);
-            distance.Distance_reset();
-            direction.Direction_init();
-            flag = true;
-            break;
-
-        default:
-            break;
+    if(d_distance < 100.0)//〇の固定値
+    {
+        //constant.gyro_run(50 , 50);
+        constant.constant_run(40, 40);
     }
-    return flag;
+    if(100.0 <= d_distance && d_distance < 322.0)//Pid
+    {
+        tracer.run(0.2, 0, 0.016, 50, 1);
+        gyrosensor.reset();
+    }
+    else if(322.0 <= d_distance && d_distance < 436.0)//pid
+    {
+        constant.gyro_run(0 , 0);
+        //constant.constant_run(50, 50);
+    }
+    //----------------------------------------------
+    else if(436.0 <= d_distance && d_distance < 668.0)//〇の固定値
+    {
+        tracer.run(0.2, 0, 0.016, 50, 1);
+        gyrosensor.reset();
+    }
+    else if(668.0 <= d_distance && d_distance < 780.0)//pid
+    {
+        //gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+        //constant.constant_run(0, 0);
+    }
+    //----------------------------------------------
+    else if(780.0 <= d_distance && d_distance < 1010.0)//〇の固定値
+    {
+        tracer.run(0.2, 0, 0.016, 50, 1);
+        gyrosensor.reset();
+    }
+    else if(1010.0 <= d_distance && d_distance < 1120.0)//pid
+    {
+        //gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+        //constant.constant_run(0, 0);
+    }
+    else if(d_distance >= 1120.0)
+    {
+        constant.gyro_run(0 , 0);
+        //-------------------------------------------------------
+        //左回転の方位取得
+        //-------------------------------------------------------
+        direction.Direction_l_update(leftdistance, rightdistance);
+        Direction = direction.Get_direction();
+        //-------------------------------------------------------
+        //旋回
+        //-------------------------------------------------------
+        constant.pid_r_turn(-60 , 60);
+
+        //-------------------------------------------------------
+        //方位が一定を超えたら停止
+        //-------------------------------------------------------
+        if(Direction > 90.0)
+        {
+            constant.gyro_run(0 , 0);   
+            flag = false;      
+        }
+    }
     
+    return flag;
+}
+
+bool Debris::debris_removal2(float d_distance, float leftdistance, float rightdistance)
+{
+    //---------------------------------------------
+    //フラグ返す
+    //---------------------------------------------
+    //printf("\ndebris_removal2:distance%f\n",d_distance);
+    //printf("Rem2:Direction:%f\n",Direction);
+
+    //gyrosensor.reset();
+
+    //---------------------------------------------
+    //直進
+    //---------------------------------------------
+    if(d_distance < 20.0)//〇の固定値
+    {
+        gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+    }
+    else if(20.0 <= d_distance && d_distance < 230.0)//pid
+    {
+        tracer.run(0.2, 0, 0.016, 50, -1);
+    }
+    //----------------------------------------------
+    else if(230.0 <= d_distance && d_distance < 375.0)//〇の固定値
+    {
+        gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+        
+    }
+    else if(375.0 <= d_distance && d_distance < 595.0)//pid 距離の見直し
+    {
+        tracer.run(0.2, 0, 0.016, 50, -1);
+    }
+    //----------------------------------------------
+    else if(595.0 <= d_distance && d_distance < 735.0)//〇の固定値
+    {
+        gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+    }
+    else if(735.0 <= d_distance && d_distance < 950.0)//pid
+    {
+        tracer.run(0.2, 0, 0.016, 50, -1);
+    }
+    //----------------------------------------------
+    else if(950.0 <= d_distance && d_distance < 1050.0)//〇の固定値
+    {
+        gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+    }
+    else if(d_distance >= 1050.0)
+    {
+        constant.gyro_run(0 , 0);
+        
+        constant.constant_run(0 , 0);
+          
+        flag = true;      
+        
+    }
+    
+    return flag;
+}
+
+//----------------------------------------
+//1マス分直進する関数
+//----------------------------------------
+bool Debris::debris_short(float d_distance, float leftdistance, float rightdistance)
+{
+    
+    //printf("\ndebris_short:distance%f\n",d_distance);
+    //printf("s_Direction:%f\n",s_Direction);
+
+    if(d_distance < 20.0)
+    {
+        gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+    }
+    else if(20.0 <= d_distance && d_distance < 230.0)
+    {
+        tracer.run(0.2, 0, 0.016, 50, 1);
+    }
+    //----------------------------------------------
+    else if(230.0 <= d_distance && d_distance < 375.0)
+    {
+        gyrosensor.reset();
+        constant.gyro_run(50 , 50);
+    }
+    else if(375.0 <= d_distance)
+    {
+        constant.constant_run(0 , 0);
+        //-------------------------------------------------------
+        //左回転の方位取得
+        //-------------------------------------------------------
+        direction.Direction_l_update(leftdistance, rightdistance);
+        s_Direction = direction.Get_direction();
+        //-------------------------------------------------------
+        //旋回
+        //-------------------------------------------------------
+        constant.pid_l_turn(-60 , 60);
+
+        //-------------------------------------------------------
+        //方位が一定を超えたら停止
+        //-------------------------------------------------------
+        if(s_Direction > 90.0)
+        {
+            constant.gyro_run(0 , 0);   
+            direction.Direction_init();
+            run_flag = false;        
+        }
+    }
+    return run_flag;
+}
+
+void Debris::debris_action(float d_distance, float leftdistance, float rightdistance)
+{
+    //d_flag2 = debris_removal2(d_distance, leftdistance, rightdistance);
+    
+    if(b_flag)
+    {
+        if(a_flag)
+        {
+            a_flag = debris_removal(d_distance, leftdistance, rightdistance);
+        }
+        else
+        {
+            b_flag = false;
+            distance.Distance_reset();
+            gyrosensor.reset();
+        }
+    }
+    else
+    {
+        distance2 = distance.Distance_calculate();
+        leftdistance2 = distance.Get_distance_left();
+        rightdistance2 = distance.Get_distance_right();
+        printf("\ndebris_action:distance2:%f\n",distance2);
+
+        //d_flag2 = debris_removal2(distance2, leftdistance2, rightdistance2);
+
+        d_flag2 = debris_short(distance2, leftdistance2, rightdistance2);
+
+    }
 }

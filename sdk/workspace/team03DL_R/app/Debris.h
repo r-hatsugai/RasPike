@@ -17,26 +17,33 @@ class Debris
     public:
     Debris();
     void init();
-    bool debris_removal(float leftdistance, float rightdistance);
+    bool debris_removal(float d_distance,float leftdistance, float rightdistance);
+    bool debris_short(float d_distance,float leftdistance, float rightdistance);
+
+    void debris_action(float d_distance,float leftdistance, float rightdistance);
+    bool debris_removal2(float d_distance, float leftdistance, float rightdistance);
     
     Motor leftWheel;
     Motor rightWheel;
     DistanceClass distance;
-    DirectionClass direction;
     ConstantTracerClass constant;
-    CoordinateClass coordinate;
     GyroSensor gyrosensor;
     Tracer tracer;
+    DirectionClass direction;
 
-    int cur_gridX;//現在位置座標のX値
-    int cur_gridY;//現在位置座標のY値
-    float target_dir;//現在位置座標から目標座標までの距離
-    float target_dis;//現在位置座標から目標座標までの方位
-    float cur_dir;//方位計の現在値
-    float cur_dis;//距離計の現在値
-    int grid_count;//目標座標構造体への参照カウンタ
-    float leftdistance;
-    float rightdistance;
+    float Direction;
+    float s_Direction;
     bool flag;
+    bool turn_flag;
+    bool run_flag;
+
+    bool reset = true;
+    bool a_flag = true;
+    bool b_flag = true;
+    float distance2;
+    float leftdistance2;
+    float rightdistance2;
+    bool d_flag;
+    bool d_flag2;
 };
 #endif
