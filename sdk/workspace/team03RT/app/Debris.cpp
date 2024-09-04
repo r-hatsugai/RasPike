@@ -18,40 +18,42 @@ bool Debris::debris_removal(float d_distance,float leftdistance, float rightdist
     //---------------------------------------------
     //フラグ返す
     //---------------------------------------------
-    printf("\nRem:distance%f\n",d_distance);
+    //printf("\nRem:distance%f\n",d_distance);
     //printf("Rem:Direction:%f\n",Direction);
 
     //---------------------------------------------
     //直進
     //---------------------------------------------
-    //constant.gyro_run(0 , 0);
 
     if(d_distance < 100.0)//〇の固定値
     {
         //constant.gyro_run(50 , 50);
-        constant.constant_run(50, 50);
+        //constant.constant_run(50, 50);
+        tracer.run(0.001, 0, 0.016, 50, 1);
     }
     if(100.0 <= d_distance && d_distance < 322.0)//Pid
     {
         tracer.run(0.2, 0, 0.016, 50, 1);
-        gyrosensor.reset();
+        //gyrosensor.reset();
     }
     else if(322.0 <= d_distance && d_distance < 436.0)//pid
     {
         //constant.gyro_run(0 , 0);
-        constant.constant_run(0, 0);
+        //constant.constant_run(0, 0);
+        tracer.run(0.001, 0, 0.016, 50, 1);
     }
     //----------------------------------------------
     else if(436.0 <= d_distance && d_distance < 668.0)//〇の固定値
     {
-        tracer.run(0.2, 0, 0.016, 50, 1);
+        tracer.run(0.2, 0, 0.016, 0, 1);
         gyrosensor.reset();
     }
     else if(668.0 <= d_distance && d_distance < 780.0)//pid
     {
         //gyrosensor.reset();
         //constant.gyro_run(50 , 50);
-        constant.constant_run(50, 50);
+        //constant.constant_run(50, 50);
+        tracer.run(0.001, 0, 0.016, 50, 1);
     }
     //----------------------------------------------
     else if(780.0 <= d_distance && d_distance < 1010.0)//〇の固定値
@@ -63,7 +65,8 @@ bool Debris::debris_removal(float d_distance,float leftdistance, float rightdist
     {
         //gyrosensor.reset();
         //constant.gyro_run(50 , 50);
-        constant.constant_run(50, 50);
+        //constant.constant_run(50, 50);
+        tracer.run(0.001, 0, 0.016, 50, 1);
     }
     else if(d_distance >= 1120.0)
     {
