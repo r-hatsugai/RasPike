@@ -10,6 +10,7 @@ class ConstantTracerClass : public Tracer
 {
     public:
         ConstantTracerClass();
+        void constant_init(void);
         void constant_run(int left_motor_power,int right_motor_power);
         void gyro_run(int left_motor_power,int right_motor_power);
         void pid_l_turn(int left_motor_power, int right_motor_power);

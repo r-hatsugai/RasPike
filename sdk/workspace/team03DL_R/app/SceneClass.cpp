@@ -28,17 +28,17 @@ bool SceneClass::scene_decide(float distance){
     //シーン判断
     //---------------------------------
     
+    //右斜めに傾け設置する
     if(distance <= 2770)
     {        
         //tracer.run(0.095,0,0.009,50,firstEdge);
         //tracer.run(0.095,0,0.009,60,firstEdge);
         //tracer.run(0.075,0.015,0.02,65,firstEdge);
-        tracer.run(0.07,0,0.016,70,firstEdge);
+        tracer.run(0.1,0,0.03,70,firstEdge);
         //tracer.run(0.064,0,0.012,73,firstEdge);
         //tracer.run(0.074,0,0.033,75,firstEdge);
         //tracer.run(0.088,0,0.0349,80,firstEdge);
-    }
-    
+    }    
     /* 第一コーナー */ //2630 3300 2580 3500
     else if(2770 < distance && distance <= 3340) //0.298,0.25,0.003,  0.26,,0.00238
     {
@@ -52,7 +52,8 @@ bool SceneClass::scene_decide(float distance){
     {
         //tracer.run(0.095,0,0.009,50,firstEdge);
         //tracer.run(0.046,0.003,0.0013,68,edge);
-        tracer.run(0.07,0,0.015,70,firstEdge);
+        //tracer.run(0.07,0,0.015,70,firstEdge);
+        tracer.run(0.1,0,0.03,70,firstEdge);
         //tracer.run(0.07,0,0.02,80,firstEdge);
         //tracer.run(0.088,0,0.0348,80,firstEdge);
     }
@@ -60,16 +61,16 @@ bool SceneClass::scene_decide(float distance){
     else if(4800 < distance && distance <= 5590)
     {
        /* 充電満タン時 */       
-        tracer.run(0.26,0,0.0075,45,firstEdge);
+        tracer.run(0.24,0,0.015,45,firstEdge);
         /* 充電微量時 */
         //tracer.run(0.19,0,0.016,45,firstEdge);    
         //tracer.run(0.2,0,0.016,45,firstEdge);
-
     }
     /* 第二コーナー → シーン➀ */ //5400 6130 550
     else if(5590 < distance && distance <= 6130)
     {
-        tracer.run(0.09,0,0.009,50,firstEdge);
+        //tracer.run(0.09,0,0.009,50,firstEdge);
+        tracer.run(0.1,0,0.03,50,firstEdge);
     }
     /* シーン➀ */ //6130 6360 280
     else if(6130 < distance && distance <= 6320)
@@ -109,12 +110,11 @@ bool SceneClass::scene_decide(float distance){
     {
         tracer.run(0.37,0,0.022,45,1);
     }
-
     /* シーン➄ */ //10690 10800 151
     else if(10780 < distance && distance <= 10871)
     {
         //constanttracer.constant_run(56, 28);//(56, 28)
-        constanttracer.constant_run(30, 39);//(40, 28) 30 35
+        constanttracer.constant_run(30, 35);//(30, 39)
     }
     /* シーン➅ */ //10800 11580 730
     else if(10871 < distance && distance <= 11551)
@@ -128,10 +128,8 @@ bool SceneClass::scene_decide(float distance){
     }
     /* ダブルループ出口 → デブリリムーバル入り口 */ //11730 12130 570
     else if(11705 < distance && distance <= 12657)
-    {
-        
-        tracer.run(0.15,0,0.01,45,1);
-        
+    {        
+        tracer.run(0.15,0,0.01,45,1);       
     }  
     else if(12657 < distance) //12130
     {

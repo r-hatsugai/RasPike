@@ -20,7 +20,7 @@ public:
     //変数宣言
     //----------------------------
     int flg = 0;
-    int edge= -1;
+    int edge= 1;
     int firstEdge = edge;
 
     //----------------------------

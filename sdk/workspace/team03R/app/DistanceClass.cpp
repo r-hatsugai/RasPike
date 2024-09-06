@@ -52,8 +52,6 @@ float DistanceClass::Distance_calculate(void){
     pre_angleL = cur_angleL;
     pre_angleR = cur_angleR;
 
-    //printf("距離 %f\n", distance);
-
     return distance;
 }
 

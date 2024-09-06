@@ -25,9 +25,10 @@ Clock clock;
 
 
 //bool flag = true;
-bool flag = false;
-bool d_flag = true;
-bool d_1_flag = true;
+//bool trace_flag = true;
+bool trace_flag = false;
+//bool debris_flag = true;
+bool debris_flag = false;
 bool s_flag = true;
 bool s_flag_1 = true;
 bool s_flag_2 = true;
@@ -45,20 +46,19 @@ void tracer_task(intptr_t exinf) {
   //---------------------------------
   //距離取得
   //---------------------------------
-  getdistance=distance.Distance_calculate();
-  
+  getdistance = distance.Distance_calculate();
   //---------------------------------
   //シーン判断クラスを呼ぶ
   //---------------------------------
-  if(flag)
+  if(trace_flag)
   {
-    flag = scene.scene_decide(getdistance); 
+    trace_flag = scene.scene_decide(getdistance); 
   }
   else
   {
     stp_cyc(TRACER_CYC);
     constant.constant_run(true,true);
-    distance.Distance_reset();
+    d_distance.Distance_reset();
     // デブリの周期ハンドラを起動
     sta_cyc(DEBRIS_CYC);
   } 
@@ -79,14 +79,25 @@ void debris_task(intptr_t exinf) {
   //---------------------------------
   //距離取得
   //---------------------------------
-  distance=d_distance.Distance_calculate();
+  distance = d_distance.Distance_calculate();
   leftdistance = d_distance.Get_distance_left();
   rightdistance = d_distance.Get_distance_right();
   
   //---------------------------------
   //デブリ
   //---------------------------------
-  debris.debris_removal(leftdistance , rightdistance);
+  if(debris_flag)
+  {
+    debris_flag = debris.debris_action(distance, leftdistance, rightdistance);
+  }
+  else
+  {
+    stp_cyc(DEBRIS_CYC);
+    constant.constant_run(true,true);
+    d_distance.Distance_reset();
+    // デブリの周期ハンドラを起動
+    sta_cyc(SMARTCARRY_CYC);
+  }
   ext_tsk();
 }
 
@@ -97,7 +108,7 @@ void smartcarry_task(intptr_t exinf)
   float right_distance;
 
 
-  distance= s_distance.Distance_calculate();
+  distance = s_distance.Distance_calculate();
   left_distance = s_distance.Get_distance_left();
   right_distance = s_distance.Get_distance_right();
   printf("distance%f\n", distance);
@@ -112,7 +123,6 @@ void smartcarry_task(intptr_t exinf)
         //処理中はtrueを返し,設置したらfalseを返す
         //-------------------------------------------------------------
         s_flag = smartcarry.smart_carry(left_distance, right_distance);
-        printf("スマートキャリー起動\n");
       }
       else 
       {
@@ -131,7 +141,6 @@ void smartcarry_task(intptr_t exinf)
         //10cm固定値バック
         //-------------------------------------------------------------
         s_flag_2 = smartcarry.back_run(distance);
-        printf("バック\n");
       }
       else 
       {
@@ -150,7 +159,6 @@ void smartcarry_task(intptr_t exinf)
     //ゴール
     //-------------------------------------------------------------
     s_flag_3 = smartcarry.goal_run(left_distance, right_distance);
-    printf("ゴール\n");
   }  
 
   ext_tsk();
