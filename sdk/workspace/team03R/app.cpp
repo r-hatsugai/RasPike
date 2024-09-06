@@ -25,10 +25,12 @@ Clock clock;
 
 
 //bool flag = true;
-//bool trace_flag = true;
-bool trace_flag = false;
-//bool debris_flag = true;
-bool debris_flag = false;
+
+
+bool debris_flag = true;
+bool trace_flag = true;
+// bool trace_flag = false;
+// bool debris_flag = false;
 bool s_flag = true;
 bool s_flag_1 = true;
 bool s_flag_2 = true;
@@ -111,7 +113,6 @@ void smartcarry_task(intptr_t exinf)
   distance = s_distance.Distance_calculate();
   left_distance = s_distance.Get_distance_left();
   right_distance = s_distance.Get_distance_right();
-  printf("distance%f\n", distance);
 
   if(s_flag_3)
   {

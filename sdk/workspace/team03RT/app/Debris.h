@@ -49,11 +49,11 @@ class Debris
     float s2_Direction;
 
     //固定値走行用PID
-    float P = 0.000001;
+    float P = 0.01;
 
     //ライントレース用PID
-    float RD = 0.06;
-    float RP = 0.18;
+    float RD = 0.09;
+    float RP = 0.14;
     
     bool flag = true;
     bool turn_flag;

@@ -137,7 +137,7 @@ bool SceneClass::scene_decide(float distance){
     {
         //edge=edgeexchange.edge_exchange();
         flag = false;
-        tracer.run(0.095,0,0.009,0,1);
+        //tracer.run(0.095,0,0.009,0,1);
         gyrosensor.reset();
         constanttracer.constant_init();
     }        
